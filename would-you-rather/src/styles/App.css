@@ -7,12 +7,22 @@ body {
     cursor: no-drop;
 }
 
-.navbar>.navbar-collapse>.navbar__user-name{
+.navbar>.navbar-collapse>.navbar__user-name {
     margin-right: 10px;
 }
 
-.card{
+.card {
     margin-top: 15px;
+}
+
+.avatars-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+}
+
+.avatars-container .active img {
+    border: 5px solid greenyellow;
 }
 
 .user-avatar-container{
@@ -21,25 +31,29 @@ body {
     justify-content: center;
 }
 
-.user-avatar-container>.user-avatar{
+.user-avatar-container>.user-avatar {
     width: 100px;
     height: 100px;
     border-radius: 50px;
     flex-shrink: 0;
 }
 
-.nav-tabs{
+.nav-tabs {
     width: 100%;
     margin-top: 20px;
     margin-bottom: 20px;
     cursor: pointer;
 }
 
-.poll-view{
+.poll-view {
     margin: 50px auto;
 }
 
-.poll-view .poll-options-container{
+.poll-view .poll-options-container {
     display: flex;
     align-items: center;
+}
+
+.default-margin-top {
+    margin-top: 20px;
 }

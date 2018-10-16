@@ -131,13 +131,13 @@ export function _getQuestions () {
   })
 }
 
-export function _addUser({name, email}) {
+export function _addUser({name, avatarURL}) {
   return new Promise((res, rej) => {
     const id = generateUID();
     const newUser = {
       id,
       name,
-      avatarURL: 'https://avatars.io/platform/userId',
+      avatarURL: !avatarURL ? 'https://avatars.io/platform/userId' : avatarURL,
       answers: {},
       questions: [],
     };

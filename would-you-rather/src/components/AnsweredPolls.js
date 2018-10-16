@@ -5,7 +5,7 @@ import PollList from './PollList';
 class AnsweredPolls extends React.Component {
     didAuthedUserVotedForOption(_option) {
         const { authedUser } = this.props;
-        return (_option.votes.length > 0 && _option.votes.find((_vote) => _vote === authedUser));
+        return (_option.votes && _option.votes.length > 0 && _option.votes.find((_vote) => _vote === authedUser));
     }
 
     getAnsweredQuestions() {

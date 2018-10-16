@@ -38,7 +38,7 @@ class Login extends React.Component {
         }
 
         return (
-            <div className="row">
+            <div className="row default-margin-top">
                 <div className="offset-md-4 col-md-4">
                     <h2 className="text-center">
                         Welcome to the Would you rather App
