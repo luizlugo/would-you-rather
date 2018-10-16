@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 // Actions
 import {
@@ -8,7 +8,7 @@ import {
 // Components
 import Login from './Login';
 import Signup from './Signup';
-import Dashboard from './Dashboard';
+import Main from './Main';
 
 class App extends Component {
   componentDidMount() {
@@ -19,16 +19,22 @@ class App extends Component {
   }
 
   render() {
+    const { authedUser } = this.props;
     return (
       <Router>
         <Fragment>
-          <div className="container-fluid">
-            <Route path="/login" exact component={Login}></Route>
-            <Route path="/signup" exact component={Signup}></Route>
-            <Route path="/dashboard" exact component={Dashboard}></Route>
-            <Route path="/" exact render={() => {
-              return <Redirect to="/dashboard" />
-            }}></Route>
+          <div className="container-fluid h-100">
+            <Switch>
+              <Route path="/login" exact component={Login} />
+              <Route path="/signup" exact component={Signup} />
+              <Route path="/" render={() => {
+                if (authedUser) {
+                  return <Main />;
+                } else {
+                  return <Redirect to="/login" />;
+                }
+              }}/>
+            </Switch>
           </div>
         </Fragment>
       </Router>

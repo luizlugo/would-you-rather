@@ -6,7 +6,6 @@ import { handleAddUser } from '../actions/users';
 class Signup extends React.Component {
     state = {
         name: '',
-        email: '',
         redirect: false,
     };
 
@@ -21,7 +20,6 @@ class Signup extends React.Component {
 
     onSubmit = (e) => {
         e.preventDefault();
-        console.log('state:', this.state);
         
         const { dispatch } = this.props;
         const user = this.state;
@@ -46,10 +44,7 @@ class Signup extends React.Component {
                             <input type="text" placeholder="Enter your name" id="name" className="form-control" onChange={this.onChange} value={this.state.name} />
                         </div>
                         <div className="form-group">
-                            <input type="email" placeholder="Enter your email" id="email" className="form-control" onChange={this.onChange} value={this.state.email} />
-                        </div>
-                        <div className="form-group">
-                            <button className="btn btn-outline-primary">Register</button>
+                            <button className="btn btn-outline-primary" disabled={this.state.name === ''}>Register</button>
                         </div>
                     </form>
                 </div>
