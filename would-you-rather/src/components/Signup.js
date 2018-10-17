@@ -1,22 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import { handleAddUser } from '../actions/users';
 
 class Signup extends React.Component {
     state = {
         name: '',
         avatarURL: '',
-        redirect: false,
-        cancel: false
+        error: false
     };
 
     onChange = (e) => {
         e.preventDefault();
         const { id, value } = e.target;
+        const { users } = this.props;
+        const nameFound = Object.keys(this.props.users).map((_userId) => users[_userId]).find((_user) => _user.name === value)
+
         this.setState((_prevState) => ({
             ..._prevState,
-            [id]: value
+            [id]: value,
+            error: nameFound ? true : false
         }));
     }
 
@@ -30,33 +32,26 @@ class Signup extends React.Component {
     onSubmit = (e) => {
         e.preventDefault();
         const { dispatch } = this.props;
-        const { name, avatarURL, cancel } = this.state;
-        if (cancel) {
-            return;
-        }
+        const { name, avatarURL } = this.state;
 
         dispatch(handleAddUser({
             name,
             avatarURL: `/assets/img/${avatarURL}.png`
         }));
-        this.setState((_prevState) => ({
-            ..._prevState,
-            redirect: true
-        }));
+
+       this.props.history.push({
+           pathname: '/login'
+       });
     }
 
     onCancelClicked = (e) => {
         e.preventDefault();
-        this.setState(() => ({
-            cancel: true,
-            redirect: true
-        }));
+        this.props.history.push({
+            pathname: '/login'
+        });
     }
 
     render() {
-        if (this.state.redirect) {
-            return <Redirect to="/login" />
-        }
         return (
             <div className="row default-margin-top">
                 <div className="offset-md-4 col-md-4">
@@ -64,6 +59,7 @@ class Signup extends React.Component {
                     <form onSubmit={this.onSubmit}>
                         <div className="form-group">
                             <input type="text" placeholder="Enter your name" id="name" className="form-control" onChange={this.onChange} value={this.state.name} />
+                            { (this.state.error) && <span className="text-danger">This name was already taken by someone else. Please use another one</span> }
                         </div>
                         <label>Select your avatar:</label>
                         <div className="row avatars-container">
@@ -101,7 +97,7 @@ class Signup extends React.Component {
                         </div>
                         <div className="row default-margin-top">
                             <div className="offset-md-3 col-md-3">
-                                <button className="btn btn-lg btn-outline-primary" disabled={this.state.name === '' || this.state.avatarURL === ''} type="submit">Register</button>
+                                <button className="btn btn-lg btn-outline-primary" disabled={this.state.name === '' || this.state.avatarURL === '' || this.state.error} type="submit">Register</button>
                             </div>
                             <div className="col-md-3">
                                 <button className="btn btn-lg btn-outline-danger" onClick={this.onCancelClicked}>Cancel</button>
@@ -113,4 +109,9 @@ class Signup extends React.Component {
         )
     };
 }
-export default connect()(Signup);
+const mapStateToProps = ({users}) => {
+    return {
+        users
+    }
+}
+export default connect(mapStateToProps)(Signup);

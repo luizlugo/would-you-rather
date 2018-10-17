@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import LoadingBar from 'react-redux-loading';
 // Actions
 import {
   handleInitData
@@ -23,7 +24,8 @@ class App extends Component {
     return (
       <Router>
         <Fragment>
-          <div className="container-fluid h-100">
+          <LoadingBar />
+          <div className="container-fluid">
             <Switch>
               <Route path="/login" exact component={Login} />
               <Route path="/signup" exact component={Signup} />

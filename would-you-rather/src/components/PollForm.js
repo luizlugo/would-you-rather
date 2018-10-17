@@ -1,14 +1,13 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { handleAddQuestion } from '../actions/questions';
+import { withRouter } from 'react-router-dom';
 
 class PollForm extends React.Component {
     state = {
         optionOneText: '',
         optionTwoText: '',
-        author: this.props.authedUser,
-        redirect: false
+        author: this.props.authedUser
     }
 
     onChange = (e) => {
@@ -21,7 +20,7 @@ class PollForm extends React.Component {
     }
 
     onSubmitForm = (e) => {
-        const { dispatch } = this.props;
+        const { dispatch, history } = this.props;
         const { optionOneText, optionTwoText, author } = this.state;
         const question = {
             optionOneText,
@@ -30,18 +29,15 @@ class PollForm extends React.Component {
         };
         dispatch(handleAddQuestion(question));
         this.setState((_prevState) => ({
-            ..._prevState,
-            redirect: true
+            ..._prevState
         }));
+        history.push({
+            pathname: '/dashboard'
+        });
     }
 
     render() {
         const { author } = this.props;
-        const { redirect } = this.state;
-
-        if (redirect) {
-            return <Redirect to="/" />
-        }
         return (
             <div className="row poll-view">
                 <div className="offset-md-3 col-md-6">
@@ -63,9 +59,9 @@ class PollForm extends React.Component {
                         </div>
                     </div>
 
-                    <div className="row">
-                        <div className="col-md-12">
-                            <button className="btn btn-lg btn-primary" disabled={(this.state.optionOneText === '' || this.state.optionTwoText === '')} onClick={this.onSubmitForm}>SAVE</button>
+                    <div className="row default-margin-top">
+                        <div className="col-md-12 center-elements">
+                            <button className="btn btn-lg btn-primary" disabled={(this.state.optionOneText === '' || this.state.optionTwoText === '')} onClick={this.onSubmitForm}>SAVE POLL</button>
                         </div>
                     </div>
                 </div>
@@ -79,4 +75,4 @@ const mapStateToProps = ({ authedUser, users }) => {
         authedUser
     }
 };
-export default connect(mapStateToProps)(PollForm);
+export default withRouter(connect(mapStateToProps)(PollForm));

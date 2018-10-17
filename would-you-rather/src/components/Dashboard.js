@@ -27,10 +27,10 @@ class Dashboard extends React.Component {
                 <div className="col-md-12">
                     <ul className="nav nav-tabs">
                         <li className="nav-item">
-                            <a className={`nav-link ${(this.state.currentTab) === 0 ? 'active' : ''}`} onClick={() => this.onTabPressed(0)}>Unanswered Questions</a>
+                            <label className={`nav-link ${(this.state.currentTab) === 0 ? 'active' : ''}`} onClick={() => this.onTabPressed(0)}>Unanswered Questions</label>
                         </li>
                         <li className="nav-item">
-                            <a className={`nav-link ${(this.state.currentTab) === 1 ? 'active' : ''}`} onClick={() => this.onTabPressed(1)}>Answered Questions</a>
+                            <label className={`nav-link ${(this.state.currentTab) === 1 ? 'active' : ''}`} onClick={() => this.onTabPressed(1)}>Answered Questions</label>
                         </li>
                     </ul>
                 </div>

@@ -1,20 +1,28 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { handleLogout } from '../actions/authedUser';
+import { handleNavigation } from '../actions/navigation';
 
 class Navbar extends React.Component {
     logout = (_e) => {
         _e.preventDefault();
         const { dispatch } = this.props;
         dispatch(handleLogout());
+        dispatch(handleNavigation('dashboard'));
     }
+
+    updateOptionSelected = (option) => {
+        const { dispatch } = this.props;
+        dispatch(handleNavigation(option));
+    }
+
     render() {
-        const { users, authedUser, currentOption, updateOptionSelected } = this.props;
+        const { users, authedUser, navigation } = this.props;
         const currentUser = users[authedUser];
         return (
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                <Link to="/dashboard" className="navbar-brand">Would you Rather?</Link>
+                <NavLink to="/dashboard" className="navbar-brand">Would you Rather?</NavLink>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
@@ -22,14 +30,14 @@ class Navbar extends React.Component {
                 { (authedUser) && (
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav mr-auto">
-                            <li className={`nav-item ${(currentOption === 'dashboard' ? 'active' : '')}`}>
-                                <Link to="/dashboard" className="nav-link" onClick={() => updateOptionSelected('dashboard')}>Dashboard</Link>
+                            <li className={`nav-item ${(navigation === 'dashboard' ? 'active' : '')}`}>
+                                <NavLink to="/dashboard" className="nav-link" onClick={() => this.updateOptionSelected('dashboard')}>Dashboard</NavLink>
                             </li>
-                            <li className={`nav-item ${(currentOption === 'leaderboard' ? 'active' : '')}`}>
-                                <Link to="/leaderboard" className="nav-link" onClick={() => updateOptionSelected('leaderboard')}>Leaderboard</Link>
+                            <li className={`nav-item ${(navigation === 'leaderboard' ? 'active' : '')}`}>
+                                <NavLink to="/leaderboard" className="nav-link" onClick={() => this.updateOptionSelected('leaderboard')}>Leaderboard</NavLink>
                             </li>
-                            <li className={`nav-item ${(currentOption === 'add' ? 'active' : '')}`}>
-                                <Link to="/add" className="nav-link" onClick={() =>  updateOptionSelected('add')}>New Question</Link>
+                            <li className={`nav-item ${(navigation === 'add' ? 'active' : '')}`}>
+                                <NavLink to="/add" className="nav-link" onClick={() => this.updateOptionSelected('add')}>New Question</NavLink>
                             </li>
                         </ul>
                         <span className="navbar-text navbar__user-name">
@@ -44,10 +52,11 @@ class Navbar extends React.Component {
         )
     }
 }
-const mapStateToProps = ({authedUser, users}) => {
+const mapStateToProps = ({ authedUser, users, navigation }) => {
     return {
         authedUser,
-        users
+        users,
+        navigation
     };
 }
 export default connect(mapStateToProps)(Navbar);

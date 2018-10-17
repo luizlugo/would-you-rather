@@ -1,7 +1,7 @@
 import React from 'react';
 import PollRow from './PollRow';
 
-const PollList = ({ questions }) => {
+const PollList = ({ questions, answered }) => {
     return (
         <div className="row">
             <div className="col-md-12">

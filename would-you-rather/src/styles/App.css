@@ -54,6 +54,39 @@ body {
     align-items: center;
 }
 
+.poll-view .poll-options-container .poll-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80px;
+    cursor: pointer;
+}
+
+.poll-view .poll-options-container .poll-option label {
+    cursor: pointer;
+}
+
+.bordered {
+    border: 2px solid gray;
+    border-radius: 5px;
+}
+
+.poll-view .poll-options-container > .active {
+    background-color: greenyellow;
+    color: black;
+}
+
 .default-margin-top {
     margin-top: 20px;
+}
+
+.center-elements {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-link {
+    margin-bottom: 0;
+    cursor: pointer;
 }
